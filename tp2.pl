@@ -4,7 +4,7 @@
 
 % Implementación de los predicados.
 
-%acciones(+Proceso, -Acciones).
+% acciones(+Proceso, -Acciones).
 acciones(0,[]).
 acciones(tau * P, A):- acciones(P,A).
 acciones(M * P, [M|A]):- M \= tau, acciones(P,A).
@@ -13,6 +13,11 @@ acciones(P + Q, A):-
   acciones(Q, QA),
   append(PA, QA, REPA),
   list_to_set(REPA, A).
+
+% reduce(+Proceso1,?Accion,?Proceso2)
+reduce(A*P1,A,P1).
+reduce(P+_,A,R):- reduce(P,A,R).
+reduce(_+Q,A,R):- reduce(Q,A,R).
 
 % Tests (van un par de ejemplos, agreguen los suyos).
 
