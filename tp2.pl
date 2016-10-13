@@ -19,6 +19,18 @@ reduce(A*P1,A,P1).
 reduce(P+_,A,R):- reduce(P,A,R).
 reduce(_+Q,A,R):- reduce(Q,A,R).
 
+% reduceLista(+Proceso1,?Cadena,?Proceso2)
+reduceLista(P1, [], P2):- P1 = P2.
+reduceLista(P1,[A|AS],P3):-
+  reduce(P1,A,P2),
+  A \= tau,
+  reduceLista(P2,AS,P3).
+reduceLista(P1,AS,P3):-
+  reduce(P1,tau,P2),
+  reduceLista(P2,AS,P3).
+
+
+
 % Tests (van un par de ejemplos, agreguen los suyos).
 
 %test(0) :- not((acciones(0, L), member(_,L))).
