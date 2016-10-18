@@ -30,6 +30,19 @@ reduceLista(P1,AS,P3):-
   reduceLista(P2,AS,P3).
 
 
+% trazas(+Proceso, -Cadenas)
+trazas(0,[[]]).
+trazas(tau*P, T):-  trazas(P,T).
+trazas(M*0,N):- M\= tau , N=[[],[M]].
+trazas(M*P, [[]|T]):-   M\= tau , P\=0, trazas(P,T2), map_elem(T2, M, T).
+trazas(P+Q,T):- trazas(P,TP) , trazas(Q, TQ), append(TP, TQ, TPQ), list_to_set(TPQ, T).
+
+% map_elem(?T2, ?M, ?T).
+map_elem([[]],M,[[M]]).
+map_elem([[X|XS]],M, [[M,X|XS]]).
+map_elem([X|YS], M, [[M|X]|T]):- map_elem(YS,M,T).
+
+
 
 % Tests (van un par de ejemplos, agreguen los suyos).
 
